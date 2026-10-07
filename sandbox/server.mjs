@@ -125,8 +125,9 @@ const server=http.createServer(async(req,res)=>{
 });
 server.requestTimeout=15000;server.headersTimeout=10000;server.keepAliveTimeout=5000;
 const port = Number(process.env.PORT || 8080);
-const bindHost = process.env.HOST || (process.env.NODE_ENV === 'production' && !process.env.ATLAS_DATA_DIR ? '0.0.0.0' : '127.0.0.1');
-if (!process.env.VERCEL) {
+const bindHost = process.env.HOST || (isCloud ? '0.0.0.0' : '127.0.0.1');
+const isDirectRun = Boolean(process.argv[1] && (process.argv[1].endsWith('server.mjs') || process.argv[1].endsWith('server-v3.mjs')));
+if (isDirectRun || !process.env.VERCEL) {
   server.listen(port, bindHost, () => console.log('AtlasPay sandbox: http://127.0.0.1:' + server.address().port));
 }
 export default server;
