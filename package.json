@@ -2,6 +2,7 @@
   "name": "atlaspay-global-fintech",
   "private": true,
   "version": "0.8.1",
+  "type": "module",
   "scripts": {
     "build": "echo 'AtlasPay ready'",
     "dev": "node sandbox/server.mjs",

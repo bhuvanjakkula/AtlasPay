@@ -1,6 +1,11 @@
 {
   "version": 2,
   "buildCommand": "echo 'AtlasPay ready'",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "apps/web/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",

@@ -54,7 +54,19 @@ const server=http.createServer(async(req,res)=>{
   const validOrigin = !req.headers.origin || req.headers.origin==='http://'+host || req.headers.origin==='https://'+host;
   if(!validOrigin||!sameToken(req.headers['x-sandbox-token'],s.token))throw new Fault('Invalid session or origin',403);
   const minute=Math.floor(Date.now()/60000),limKey=minute+':'+(url.pathname.startsWith('/api/accounts/')?'auth':'ops');const count=limits.get(limKey)||0;if(count>=(limKey.endsWith('auth')?10:100))throw new Fault('Too many requests; try again next minute',429);for(const k of limits.keys())if(!k.startsWith(minute+':'))limits.delete(k);limits.set(limKey,count+1);
-  if(!req.headers['content-type']?.startsWith('application/json'))throw new Fault('JSON required',415);const max=url.pathname==='/api/backup/preview'?75000000:url.pathname==='/api/business/invoice'?800000:65536;const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>max)throw new Fault('Request too large',413);chunks.push(chunk);}let input;try{input=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Buffer.concat(chunks)));}catch{throw new Fault('Invalid JSON');}if(!input||typeof input!=='object'||Array.isArray(input))throw new Fault('Invalid request');
+  if(!req.headers['content-type']?.startsWith('application/json'))throw new Fault('JSON required',415);
+  const max=url.pathname==='/api/backup/preview'?75000000:url.pathname==='/api/business/invoice'?800000:65536;
+  let input;
+  if(req.body !== undefined && req.body !== null){
+    if(typeof req.body==='object') input=req.body;
+    else if(typeof req.body==='string'){try{input=JSON.parse(req.body);}catch{throw new Fault('Invalid JSON');}}
+    else if(Buffer.isBuffer(req.body)){try{input=JSON.parse(req.body.toString('utf8'));}catch{throw new Fault('Invalid JSON');}}
+  } else {
+    const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>max)throw new Fault('Request too large',413);chunks.push(chunk);}
+    if(chunks.length){try{input=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Buffer.concat(chunks)));}catch{throw new Fault('Invalid JSON');}}
+    else input={};
+  }
+  if(!input||typeof input!=='object'||Array.isArray(input))throw new Fault('Invalid request');
   const result=await enqueue(async()=>{
    if(s.cookie&&(!sessions.has(s.cookie)||sessions.get(s.cookie).expiresAt<=Date.now()||sessions.get(s.cookie).workspaceId!==id||Date.now()-Date.parse(sessions.get(s.cookie).lastSeenAt)>=IDLE_MS))throw new Fault('Session ended; sign in again',401);
    user=accounts.find(a=>a.id===s.accountId);
