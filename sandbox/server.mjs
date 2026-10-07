@@ -1,4 +1,4 @@
-import http from 'node:http';import { pathToFileURL } from 'node:url';import { resolve,sep } from 'node:path';import { readFile,writeFile,mkdir,rename } from 'node:fs/promises';import { randomBytes,timingSafeEqual } from 'node:crypto';
+import http from 'node:http';import { pathToFileURL } from 'node:url';import { resolve,sep,join } from 'node:path';import { tmpdir } from 'node:os';import { readFile,writeFile,mkdir,rename } from 'node:fs/promises';import { randomBytes,timingSafeEqual } from 'node:crypto';
 import { initialState,quote,pay,review,Fault,available,reserved } from './engine.mjs';
 import { newKeys,publicKeys,attest,checkPayments,seal,unseal,signReceipt,verifyReceipt } from './pqc.mjs';
 import { beneficiary,reconcileStatement } from './operations.mjs';import { recordReference,lifecycle } from './external.mjs';
@@ -7,7 +7,10 @@ import { tagPlans,approve,duplicates,invoiceNumber,search,forecast,template,runT
 const recoveryPreviews=new Map();
 import { readiness } from './readiness.mjs';
 import {sendToken,tokenHash,newPassword,createEnrollment,verifyTotp,recoveryCodes,verifyFactor} from './auth-security.mjs';const enrollments=new Map();
-const data=process.env.ATLAS_DATA_DIR?pathToFileURL(resolve(process.env.ATLAS_DATA_DIR)+sep):new URL('../.sandbox/',import.meta.url);await mkdir(data,{recursive:true});
+const isServerless = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.LAMBDA_TASK_ROOT);
+const defaultDataDir = isServerless ? pathToFileURL(join(tmpdir(), '.sandbox') + sep) : new URL('../.sandbox/', import.meta.url);
+const data = process.env.ATLAS_DATA_DIR ? pathToFileURL(resolve(process.env.ATLAS_DATA_DIR) + sep) : defaultDataDir;
+await mkdir(data, { recursive: true });
 async function readJson(name,fallback){try{return JSON.parse(await readFile(new URL(name,data),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;return fallback;}}
 async function writeJson(name,body){const tmp=new URL(name+'.tmp',data);await writeFile(tmp,JSON.stringify(body,null,2),{mode:0o600});await rename(tmp,new URL(name,data));}
 let accounts=await readJson('accounts.json',[]);const states=new Map([['demo',await readJson('state.json',initialState())]]);const sessions=new Map();
