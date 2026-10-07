@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+const base='http://127.0.0.1:8080';
+assert.equal((await fetch(base+'/health')).status,200);
+for(const file of ['/','/app.js','/style.css'])assert.equal((await fetch(base+file)).status,200);
+const state=await (await fetch(base+'/api/state')).json();
+const request=(path,body,headers={})=>fetch(base+'/api/'+path,{method:'POST',headers:{'Content-Type':'application/json',Origin:base,'X-Sandbox-Token':state.token,...headers},body:JSON.stringify(body)});
+assert.equal((await request('quotes',{}, {'X-Sandbox-Token':'invalid'})).status,403);
+const qr=await request('quotes',{sourceCurrency:'USD',targetCurrency:'EUR',amountMinor:'10000',recipient:'Sandbox QA recipient',purpose:'API smoke test'});assert.equal(qr.status,200);const q=await qr.json();
+const headers={'Idempotency-Key':'smoke-'+crypto.randomUUID()};const a=await request('payments',{quoteId:q.id},headers);assert.equal(a.status,200);const payment=await a.json();
+const b=await request('payments',{quoteId:q.id},headers);assert.equal(b.status,200);assert.equal((await b.json()).id,payment.id);
+assert.equal((await request('payments',{quoteId:'different'},headers)).status,409);
+const after=await (await fetch(base+'/api/state')).json();assert.equal(after.journals.length,state.journals.length+1);assert.equal(BigInt(after.wallets.USD),BigInt(state.wallets.USD)-BigInt(q.totalMinor));
+console.log('HTTP smoke passed: assets, auth/origin guard, quote, settlement, replay, conflict, persisted ledger.');
+console.log('One clearly labeled QA sandbox payment was added to the local workspace.');

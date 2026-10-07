@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: atlaspay-global-fintech
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: echo "Building AtlasPay..."
+    startCommand: node sandbox/server.mjs
+    envVars:
+      - key: NODE_VERSION
+        value: 24.7.0
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000

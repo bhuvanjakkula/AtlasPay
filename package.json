@@ -1,0 +1,19 @@
+{
+  "name": "atlaspay-global-fintech",
+  "private": true,
+  "version": "0.8.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @atlas/api",
+    "test": "npm run test -w @atlas/core && npm run test -w @atlas/crypto",
+    "typecheck": "npm run typecheck -ws --if-present",
+    "sandbox": "node sandbox/server.mjs",
+    "test:sandbox": "node --test sandbox/engine.test.mjs sandbox/pqc.test.mjs sandbox/http.test.mjs sandbox/external.test.mjs sandbox/business.test.mjs sandbox/workflows.test.mjs sandbox/readiness.test.mjs sandbox/accounts.test.mjs sandbox/auth-security.test.mjs sandbox/sessions.test.mjs"
+  },
+  "engines": {
+    "node": ">=24.7.0"
+  }
+}

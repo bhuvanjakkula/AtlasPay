@@ -1,0 +1,5 @@
+import{createHmac,timingSafeEqual}from'node:crypto';
+export const cryptoPolicy={version:'2026-10',transport:'TLS 1.3; hybrid PQC where supported',kem:'ML-KEM-768 (FIPS 203) via validated provider',signature:'ML-DSA-65 (FIPS 204) via validated provider',symmetric:'AES-256-GCM',hash:'SHA-384'} as const;
+export interface PqcProvider{encapsulate(publicKey:Uint8Array):Promise<{ciphertext:Uint8Array;sharedSecret:Uint8Array}>;decapsulate(ciphertext:Uint8Array,keyRef:string):Promise<Uint8Array>;sign(message:Uint8Array,keyRef:string):Promise<Uint8Array>;verify(message:Uint8Array,signature:Uint8Array,publicKey:Uint8Array):Promise<boolean>}
+export function signWebhook(body:string,secret:string,timestamp:number){return createHmac('sha384',secret).update(`${timestamp}.${body}`).digest('hex')}
+export function verifyWebhook(body:string,secret:string,timestamp:number,signature:string,now=Math.floor(Date.now()/1000)){if(Math.abs(now-timestamp)>300)return false;const a=Buffer.from(signWebhook(body,secret,timestamp),'hex'),b=Buffer.from(signature,'hex');return a.length===b.length&&timingSafeEqual(a,b)}

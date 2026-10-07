@@ -1,0 +1,1 @@
+import test from'node:test';import assert from'node:assert/strict';import{signWebhook,verifyWebhook}from'./index.js';test('webhook',()=>{const t=1000,s=signWebhook('{}','a-very-long-development-secret',t);assert.equal(verifyWebhook('{}','a-very-long-development-secret',t,s,1001),true);assert.equal(verifyWebhook('{}','a-very-long-development-secret',t,s,2000),false)});
