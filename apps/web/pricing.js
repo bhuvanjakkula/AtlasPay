@@ -9,13 +9,13 @@ const PLANS = [
     id: 'starter',
     name: 'Starter',
     price: 29,
-    stripeUrl: 'https://buy.stripe.com/test_bJefZ93aHgX33t71dRcjS0a',
+    stripeUrl: 'https://buy.stripe.com/9B6aEPdBQ7pXbTh3022oE0N',
     desc: 'For freelancers & emerging cross-border businesses.',
     features: [
       '2 Global Currency Wallets (USD, EUR)',
       'Standard FX conversion quotes',
       '1 Admin account & CSV export',
-      'Local sandbox & receipt access',
+      'Global workspace & PQC receipt access',
       'Standard customer email support'
     ]
   },
@@ -24,7 +24,7 @@ const PLANS = [
     name: 'Growth',
     price: 99,
     popular: true,
-    stripeUrl: 'https://buy.stripe.com/test_00w4grcLh5el0gV1dRcjS0b',
+    stripeUrl: 'https://buy.stripe.com/fZubITeFU39H8H5bwy2oE0M',
     desc: 'For growing teams managing regular global vendor payouts.',
     features: [
       'All 6 Global Wallets (USD, EUR, GBP, INR, SGD, JPY)',
@@ -38,7 +38,7 @@ const PLANS = [
     id: 'scale',
     name: 'Scale / Pro',
     price: 299,
-    stripeUrl: 'https://buy.stripe.com/test_9B600b8v10Y5fbP7CfcjS0c',
+    stripeUrl: 'https://buy.stripe.com/4gM5kvcxM11z4qP8km2oE0L',
     desc: 'For scaling companies needing advanced compliance & approvals.',
     features: [
       'Unlimited Team Members with Dual-Control Approval',
@@ -52,7 +52,7 @@ const PLANS = [
     id: 'enterprise',
     name: 'Enterprise',
     price: 1200,
-    stripeUrl: 'https://buy.stripe.com/test_3cI3cneTpfSZ2p3bSvcjS0d',
+    stripeUrl: 'https://buy.stripe.com/7sYcMXbtI8u10az8km2oE0K',
     desc: 'For multinational corporations & financial institutions.',
     features: [
       'Custom Multi-Entity Workspace Isolation',
@@ -197,6 +197,7 @@ export function renderPricing(state, toast) {
         <button id="activate-trial" class="link">Activate Free Trial in Local Workspace</button>
         <button class="link" data-view="overview">Return to Dashboard ↗</button>
       </div>
+      <p class="pricing-support-note">Questions about Enterprise onboarding or billing? Contact customer support at <a href="mailto:contact@apolloaiglobalcompany.com?subject=AtlasPay%20Billing%20%26%20Plan%20Support">contact@apolloaiglobalcompany.com</a>.</p>
     </div>
   `;
 

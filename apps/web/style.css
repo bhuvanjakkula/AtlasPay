@@ -58,3 +58,39 @@ nav details{border-bottom:1px solid #365242;padding-bottom:5px}nav summary{font-
 .plan-actions{display:flex;flex-direction:column;gap:8px;margin-top:auto}
 .stripe-btn{display:inline-block;text-align:center;text-decoration:none;font-weight:600}
 .stripe-checkout-cta{display:inline-block;text-decoration:none;font-weight:600;font-size:13px}
+.pricing-support-note{margin-top:16px;font-size:12px;color:#4f6954}
+.pricing-support-note a{color:#1e4932;font-weight:600}
+
+/* CSP-compliant Toast, Forgot Password, Treasury AI, Merkle Chain & Webhooks */
+#toast.toast-visible{display:block;z-index:1000}
+.auth-inline-action{margin:10px 0 0;text-align:right}
+.pw-wrap{display:flex;gap:8px;align-items:center}
+.pw-wrap input{flex:1}
+.pw-toggle{flex-shrink:0;padding:8px 10px;border:1px solid #d7e2d1;border-radius:6px;background:#f8fbf5}
+.strength-bar,.treasury-bar{width:100%;height:8px;margin-top:8px;border:0;border-radius:99px;background:#e4ede0;accent-color:#1e563e}
+.match-status{display:block;margin-top:8px;font-size:12px;font-weight:600}
+.match-ok{color:#1f6a39}
+.match-err{color:#aa4937}
+.reset-link-card{background:#eef7e5;border:1px solid #b6d6a2;border-radius:8px;padding:14px;margin-top:12px}
+.reset-link-card strong{display:block;color:#18442a;margin-bottom:4px}
+.reset-link-card p{margin:4px 0 12px}
+.network-cta{color:#d5f6b4;padding:0;text-align:left;font-weight:600}
+
+.risk-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px;background:#f7faf3;border:1px solid #dbe6d6;border-radius:8px;margin-bottom:12px}
+.risk-banner strong{display:block;color:#173d27;font-size:14px}
+.risk-banner small{display:block;color:#687c64;margin-top:4px}
+.rail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.rail-card{border:1px solid #dbe6d6;border-radius:10px;padding:16px;background:#fff}
+.rail-card.recommended{border:2px solid #1e563e;background:#f8fcf4}
+.rail-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:12px}
+.rail-metrics{display:grid;gap:7px;font-size:12px}
+.rail-metrics div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #ebf0e6;padding-bottom:5px}
+.rail-metrics span{color:#6f836c}
+.exposure-list{display:grid;gap:14px}
+.exposure-row{padding:12px;border:1px solid #e4ece0;border-radius:8px;background:#fafcf8}
+.exposure-head{display:flex;justify-content:space-between;gap:12px;font-size:13px}
+.exposure-row small{display:block;margin-top:6px;color:#6c8069;font-size:11px}
+
+.chain-banner{background:#f2f8ec;border-color:#c6ddb8}
+.hash-chip{display:block;font-family:Consolas,monospace;font-size:11px;color:#47644b;word-break:break-all;margin-top:6px}
+.payload-view{background:#f5f8f2;border:1px solid #dfe7da;border-radius:6px;padding:12px;font:11px/1.5 Consolas,monospace;overflow-x:auto;margin-top:8px;color:#1f3b28}

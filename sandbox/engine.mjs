@@ -1,7 +1,7 @@
 import { randomUUID, createHash } from 'node:crypto';
 import { providerDetails, handoffChecks } from './external.mjs';
 export const currencies = { USD: 2, EUR: 2, GBP: 2, INR: 2, SGD: 2, JPY: 0 };
-const rates = { USD: 1000000n, EUR: 920000n, GBP: 780000n, INR: 83500000n, SGD: 1340000n, JPY: 148000000n };
+export const rates = { USD: 1000000n, EUR: 920000n, GBP: 780000n, INR: 83500000n, SGD: 1340000n, JPY: 148000000n };
 export class Fault extends Error { constructor(message, status = 400) { super(message); this.status = status; } }
 export function reserved(state,currency,exclude) { return state.payments.filter(p=>p.status==='review'&&p.quote.sourceCurrency===currency&&p.id!==exclude).reduce((sum,p)=>sum+BigInt(p.quote.totalMinor),0n); }
 export function available(state,currency,exclude) {return BigInt(state.wallets[currency])-reserved(state,currency,exclude);}

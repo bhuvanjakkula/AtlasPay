@@ -11,4 +11,4 @@ This archive contains all project source, tests, documentation, infrastructure e
 Private .sandbox account data, signing keys, MFA secrets, provider credentials, email tokens, .env files, Git history and generated dependencies are intentionally excluded. Existing accounts and payment history are not transferred in this distributable archive.
 
 Real money transfers take place through external payment providers. Email delivery and optional provider lookups require your own configuration. Consult docs/ACCOUNT_SECURITY.md and docs/SECURITY_HARDENING.md.
-Support: bjtmusic12@gmail.com
+Support: contact@apolloaiglobalcompany.com

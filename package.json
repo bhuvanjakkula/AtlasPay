@@ -9,7 +9,7 @@
     "start": "node sandbox/server.mjs",
     "test": "npm run test:sandbox",
     "sandbox": "node sandbox/server.mjs",
-    "test:sandbox": "node --test sandbox/engine.test.mjs sandbox/pqc.test.mjs sandbox/http.test.mjs sandbox/external.test.mjs sandbox/business.test.mjs sandbox/workflows.test.mjs sandbox/readiness.test.mjs sandbox/accounts.test.mjs sandbox/auth-security.test.mjs sandbox/sessions.test.mjs"
+    "test:sandbox": "node --test sandbox/engine.test.mjs sandbox/pqc.test.mjs sandbox/http.test.mjs sandbox/external.test.mjs sandbox/business.test.mjs sandbox/workflows.test.mjs sandbox/readiness.test.mjs sandbox/accounts.test.mjs sandbox/auth-security.test.mjs sandbox/sessions.test.mjs sandbox/advanced.test.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
